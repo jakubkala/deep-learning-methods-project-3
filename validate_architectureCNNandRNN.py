@@ -27,8 +27,7 @@ def log_specgram(audio, sample_rate, window_size=20,
                                     nperseg=nperseg,
                                     noverlap=noverlap,
                                     detrend=False)
-    return freqs, times, np.log(spec.T.astype(np.float32) + eps)(audio, sample_rate, window_size=40,
-                 step_size=35, eps=1e-10)
+    return freqs, times, np.log(spec.T.astype(np.float32) + eps)
 
 def list_wavs_fname(dirpath, ext='wav'):
     print(dirpath)
@@ -123,11 +122,12 @@ def test_data_generator(batch=16):
     return
 
 from tensorflow.keras import optimizers, losses, activations, models
-from tensorflow.keras.layers import Convolution2D, Dense, Input, GlobalMaxPooling, Flatten, Dropout, BatchNormalization, MaxPooling2D, BatchNormalization
+from tensorflow.keras.layers import Convolution2D, Dense, Input, Flatten, Dropout, BatchNormalization, MaxPooling2D, BatchNormalization
 from sklearn.model_selection import train_test_split
 import tensorflow as tf   
 from tensorflow.keras.callbacks import ModelCheckpoint
 import json
+import tensorflow.keras.layers as layers
 
 def reset_weights(model):
     for layer in model.layers: 

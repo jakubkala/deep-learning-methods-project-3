@@ -16,9 +16,7 @@ print(os.listdir("./"))
 
 train_labels = 'yes no up down left right on off stop go silence unknown'.split()
 
-def log_specgram(audio, sample_rate, window_size=20,
-
-                 step_size=10, eps=1e-10):
+def log_specgram(audio, sample_rate, window_size=20, step_size=10, eps=1e-10):
     nperseg = int(round(window_size * sample_rate / 1e3))
     noverlap = int(round(step_size * sample_rate / 1e3))
     freqs, times, spec = signal.spectrogram(audio,
@@ -27,8 +25,7 @@ def log_specgram(audio, sample_rate, window_size=20,
                                     nperseg=nperseg,
                                     noverlap=noverlap,
                                     detrend=False)
-    return freqs, times, np.log(spec.T.astype(np.float32) + eps)(audio, sample_rate, window_size=40,
-                 step_size=35, eps=1e-10)
+    return freqs, times, np.log(spec.T.astype(np.float32) + eps)#(audio, sample_rate, window_size=40, step_size=35, eps=1e-10)
 
 def list_wavs_fname(dirpath, ext='wav'):
     print(dirpath)
@@ -123,7 +120,7 @@ def test_data_generator(batch=16):
     return
 
 from tensorflow.keras import optimizers, losses, activations, models
-from tensorflow.keras.layers import Convolution2D, Dense, Input, GlobalMaxPooling, Flatten, Dropout, BatchNormalization, MaxPooling2D, BatchNormalization
+from tensorflow.keras.layers import Convolution2D, Dense, Input, Flatten, Dropout, BatchNormalization, MaxPooling2D, BatchNormalization
 from sklearn.model_selection import train_test_split
 import tensorflow as tf   
 from tensorflow.keras.callbacks import ModelCheckpoint
@@ -214,4 +211,4 @@ def validate_architectureCNN(architecture_name,
             df['label'] = results
             df.to_csv(f'./results/submission_{architecture_name}_{it}.csv', index=False)
 
-validate_architectureCNN("CNN", 10, 10)
+validate_architectureCNN("CNN_1run", 10, 3)
