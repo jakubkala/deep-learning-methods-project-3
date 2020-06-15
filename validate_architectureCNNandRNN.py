@@ -190,7 +190,7 @@ def validate_architectureCNNandRNN(architecture_name,
         with open(f'./results/results_{architecture_name}_{it}', 'w') as fp:
             json.dump(history, fp, indent=4)
             
-            
+        model.load_weights(f'./results/best_model_{architecture_name}_{it}.h5')    
         # prediction
         index = []
         results = []
